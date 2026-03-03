@@ -1,0 +1,43 @@
+{
+	"schemaVersion": 1,
+	"id": "template",
+	"version": "${version}",
+	"name": "${mod_name}",
+	"description": "${mod_description}",
+	"authors": [
+		"Myriantics"
+	],
+	"contact": {
+		"homepage": "https://reddit.com/r/feedthememes",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "MIT",
+	"icon": "assets/template/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"net.myriantics.template.TemplateMod"
+		],
+		"client": [
+			"net.myriantics.template.TemplateModClient"
+		],
+		"fabric-datagen": [
+			"net.myriantics.template.TemplateModDataGenerator"
+		]
+	},
+	"mixins": [
+		"template.mixins.json",
+		{
+			"config": "template.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=${loader_version}",
+		"minecraft": "${minecraft_version}",
+		"java": ">=17",
+		"fabric-api": ">=${fabric_api_version}"
+	},
+	"suggests": {
+	}
+}
