@@ -7,6 +7,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.myriantics.myrror.datagen.recipe.MyrrorRecipeProvider;
 import net.myriantics.myrror.datagen.recipe.MyrrorRecipeSubProvider;
+import net.myriantics.myrror.util.NamedIngredient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,39 +19,39 @@ public abstract class CookingRecipeProvider extends MyrrorRecipeSubProvider {
         super(provider, output);
     }
 
-    public void addOreSmeltingRecipe(Ingredient ingredient, ItemStack result, UnaryOperator<CookingBuilder> operator) {
+    public void addOreSmeltingRecipe(NamedIngredient ingredient, ItemStack result, UnaryOperator<CookingBuilder> operator) {
         addSmeltingRecipe(ingredient, result, operator);
         addBlastingRecipe(ingredient, result, builder -> operator.apply(builder).mulCookingTime(0.5f));
     }
 
-    public void addFoodCookingRecipe(Ingredient ingredient, ItemStack result, UnaryOperator<CookingBuilder> operator) {
+    public void addFoodCookingRecipe(NamedIngredient ingredient, ItemStack result, UnaryOperator<CookingBuilder> operator) {
         addSmeltingRecipe(ingredient, result, operator);
         addSmokingRecipe(ingredient, result, builder -> operator.apply(builder).mulCookingTime(0.5f));
         addCampfireCookingRecipe(ingredient, result, builder -> operator.apply(builder).mulCookingTime(3.0f));
     }
 
-    public void addSmeltingRecipe(Ingredient ingredient, ItemStack result, UnaryOperator<CookingBuilder> operator) {
+    public void addSmeltingRecipe(NamedIngredient ingredient, ItemStack result, UnaryOperator<CookingBuilder> operator) {
         addCookingRecipe(ingredient, result, operator, SmeltingRecipe::new, "smelting");
     }
 
-    public void addBlastingRecipe(Ingredient ingredient, ItemStack result, UnaryOperator<CookingBuilder> operator) {
+    public void addBlastingRecipe(NamedIngredient ingredient, ItemStack result, UnaryOperator<CookingBuilder> operator) {
         addCookingRecipe(ingredient, result, operator, BlastingRecipe::new, "blasting");
     }
 
-    public void addSmokingRecipe(Ingredient ingredient, ItemStack result, UnaryOperator<CookingBuilder> operator) {
+    public void addSmokingRecipe(NamedIngredient ingredient, ItemStack result, UnaryOperator<CookingBuilder> operator) {
         addCookingRecipe(ingredient, result, operator, SmokingRecipe::new, "smoking");
     }
 
-    public void addCampfireCookingRecipe(Ingredient ingredient, ItemStack result, UnaryOperator<CookingBuilder> operator) {
+    public void addCampfireCookingRecipe(NamedIngredient ingredient, ItemStack result, UnaryOperator<CookingBuilder> operator) {
         addCookingRecipe(ingredient, result, operator, CampfireCookingRecipe::new, "campfire_cooking");
     }
 
-    public void addCookingRecipe(Ingredient ingredient, ItemStack result, UnaryOperator<CookingBuilder> operator, AbstractCookingRecipe.Factory<?> factory, String type) {
-        CookingBuilder builder = operator.apply(new CookingBuilder(ingredient, result));
+    public void addCookingRecipe(NamedIngredient ingredient, ItemStack result, UnaryOperator<CookingBuilder> operator, AbstractCookingRecipe.Factory<?> factory, String type) {
+        CookingBuilder builder = operator.apply(new CookingBuilder(ingredient.toIngredient(), result));
 
         String resultName = RecipeProvider.getItemName(result.getItem());
 
-        ResourceLocation recipeId = this.provider.computeRecipeIdentifier("cooking/" + type, resultName);
+        ResourceLocation recipeId = this.provider.computeRecipeIdentifier("cooking/" + type, resultName + "_from_" + ingredient.getName());
         provider.acceptRecipe(output, recipeId, builder.build(factory));
     }
 
