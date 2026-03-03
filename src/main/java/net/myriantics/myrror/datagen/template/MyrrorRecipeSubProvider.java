@@ -1,7 +1,8 @@
-package net.myriantics.myrror.datagen.recipe;
+package net.myriantics.myrror.datagen.template;
 
 import net.minecraft.data.recipes.RecipeOutput;
-import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.crafting.Recipe;
 
 public abstract class MyrrorRecipeSubProvider {
     protected final MyrrorRecipeProvider provider;
@@ -14,4 +15,8 @@ public abstract class MyrrorRecipeSubProvider {
     }
 
     protected abstract void generateRecipes();
+
+    protected void acceptRecipe(ResourceLocation recipeId, Recipe<?> recipe) {
+        this.provider.acceptRecipe(this.output, recipeId, recipe);
+    }
 }

@@ -1,16 +1,14 @@
-package net.myriantics.myrror.datagen.recipe.providers;
+package net.myriantics.myrror.datagen.template.providers;
 
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
-import net.myriantics.myrror.datagen.recipe.MyrrorRecipeProvider;
-import net.myriantics.myrror.datagen.recipe.MyrrorRecipeSubProvider;
+import net.myriantics.myrror.datagen.template.MyrrorRecipeProvider;
+import net.myriantics.myrror.datagen.template.MyrrorRecipeSubProvider;
 import net.myriantics.myrror.util.NamedIngredient;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.function.UnaryOperator;
 
 public abstract class CookingRecipeProvider extends MyrrorRecipeSubProvider {
@@ -52,7 +50,7 @@ public abstract class CookingRecipeProvider extends MyrrorRecipeSubProvider {
         String resultName = RecipeProvider.getItemName(result.getItem());
 
         ResourceLocation recipeId = this.provider.computeRecipeIdentifier("cooking/" + type, resultName + "_from_" + ingredient.getName());
-        provider.acceptRecipe(output, recipeId, builder.build(factory));
+        this.acceptRecipe(recipeId, builder.build(factory));
     }
 
     public static final class CookingBuilder {

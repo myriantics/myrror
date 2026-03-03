@@ -1,4 +1,4 @@
-package net.myriantics.myrror.datagen.recipe.providers;
+package net.myriantics.myrror.datagen.template.providers;
 
 import net.minecraft.core.NonNullList;
 import net.minecraft.data.recipes.RecipeOutput;
@@ -9,8 +9,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.ItemLike;
-import net.myriantics.myrror.datagen.recipe.MyrrorRecipeProvider;
-import net.myriantics.myrror.datagen.recipe.MyrrorRecipeSubProvider;
+import net.myriantics.myrror.datagen.template.MyrrorRecipeProvider;
+import net.myriantics.myrror.datagen.template.MyrrorRecipeSubProvider;
 import net.myriantics.myrror.util.MyrrorPatterns;
 import org.jetbrains.annotations.NotNull;
 
@@ -71,7 +71,7 @@ public abstract class CraftingRecipeProvider extends MyrrorRecipeSubProvider {
         String resultName = RecipeProvider.getItemName(output.getItem());
 
         ResourceLocation recipeId = this.provider.computeRecipeIdentifier("crafting/shaped", resultName);
-        this.provider.acceptRecipe(this.output, recipeId, builder.build());
+        this.acceptRecipe(recipeId, builder.build());
     }
 
     public void addShapelessCraftingRecipe(ItemStack output, UnaryOperator<ShapelessBuilder> operator) {
@@ -81,7 +81,7 @@ public abstract class CraftingRecipeProvider extends MyrrorRecipeSubProvider {
 
         ResourceLocation recipeId = this.provider.computeRecipeIdentifier("crafting/shapeless", resultName);
 
-        this.provider.acceptRecipe(this.output, recipeId, builder.build());
+        this.acceptRecipe(recipeId, builder.build());
     }
 
     public interface CraftingBuilder {

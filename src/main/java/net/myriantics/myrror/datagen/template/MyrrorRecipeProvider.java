@@ -1,4 +1,4 @@
-package net.myriantics.myrror.datagen.recipe;
+package net.myriantics.myrror.datagen.template;
 
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
@@ -34,7 +34,7 @@ public final class MyrrorRecipeProvider extends RecipeProvider {
         return this;
     }
 
-    public void acceptRecipe(RecipeOutput output, ResourceLocation recipeId, Recipe<?> recipe) {
+    void acceptRecipe(RecipeOutput exporter, ResourceLocation recipeId, Recipe<?> recipe) {
 
         ResourceLocation proposedId = null;
 
@@ -59,7 +59,7 @@ public final class MyrrorRecipeProvider extends RecipeProvider {
             recipeId = proposedId;
         }
 
-        output.accept(recipeId, recipe, null);
+        exporter.accept(recipeId, recipe, null);
     }
 
     public ResourceLocation computeRecipeIdentifier(String typeId, String path) {
