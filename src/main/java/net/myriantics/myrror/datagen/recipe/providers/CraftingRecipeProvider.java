@@ -11,11 +11,10 @@ import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.ItemLike;
 import net.myriantics.myrror.datagen.recipe.MyrrorRecipeProvider;
 import net.myriantics.myrror.datagen.recipe.MyrrorRecipeSubProvider;
+import net.myriantics.myrror.util.MyrrorPatterns;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 import java.util.function.UnaryOperator;
 
@@ -24,17 +23,38 @@ public abstract class CraftingRecipeProvider extends MyrrorRecipeSubProvider {
         super(provider, output);
     }
 
-    public void add3x3PackingRecipe(Ingredient input, ItemStack output, UnaryOperator<ShapedBuilder> operator) {
-        String[] pattern = {
-                "xxx",
-                "xxx",
-                "xxx"
-        };
-        addShapedCraftingRecipe(pattern, output, builder -> operator.apply(builder.associate('x', input)));
+    public void add2x2PackingUnpackingRecipes(ItemLike large, ItemLike small, UnaryOperator<CraftingBuilder> operator) {
+        add2x2PackingRecipe(Ingredient.of(small), new ItemStack(large), builder -> {
+            operator.apply(builder);
+            return builder;
+        });
+        add2x2UnpackingRecipe(Ingredient.of(large), small, builder -> {
+            operator.apply(builder);
+            return builder;
+        });
+    }
+
+    public void add3x3PackingUnpackingRecipes(ItemLike large, ItemLike small, UnaryOperator<CraftingBuilder> operator) {
+        add3x3PackingRecipe(Ingredient.of(small), new ItemStack(large), builder -> {
+            operator.apply(builder);
+            return builder;
+        });
+        add3x3UnpackingRecipe(Ingredient.of(large), small, builder -> {
+            operator.apply(builder);
+            return builder;
+        });
+    }
+
+    public void add2x2PackingRecipe(Ingredient input, ItemStack output, UnaryOperator<ShapedBuilder> operator) {
+        addShapedCraftingRecipe(MyrrorPatterns.SQUARE_2, output, builder -> operator.apply(builder.associate('x', input)));
     }
 
     public void add2x2UnpackingRecipe(Ingredient ingredient, ItemLike output, UnaryOperator<ShapelessBuilder> operator) {
         add1ToXUnpackingRecipe(ingredient, new ItemStack(output, 4), operator);
+    }
+
+    public void add3x3PackingRecipe(Ingredient input, ItemStack output, UnaryOperator<ShapedBuilder> operator) {
+        addShapedCraftingRecipe(MyrrorPatterns.SQUARE_3, output, builder -> operator.apply(builder.associate('x', input)));
     }
 
     public void add3x3UnpackingRecipe(Ingredient ingredient, ItemLike output, UnaryOperator<ShapelessBuilder> operator) {
@@ -45,14 +65,6 @@ public abstract class CraftingRecipeProvider extends MyrrorRecipeSubProvider {
         addShapelessCraftingRecipe(output, builder -> operator.apply(builder.requires(ingredient)));
     }
 
-    public void add2x2PackingRecipe(Ingredient input, ItemStack output, UnaryOperator<ShapedBuilder> operator) {
-        String[] pattern = {
-                "xx",
-                "xx"
-        };
-        addShapedCraftingRecipe(pattern, output, builder -> operator.apply(builder.associate('x', input)));
-    }
-    
     public void addShapedCraftingRecipe(String[] pattern, ItemStack output, UnaryOperator<ShapedBuilder> operator) {
         ShapedBuilder builder = operator.apply(ShapedBuilder.of(pattern, output));
 
@@ -72,7 +84,13 @@ public abstract class CraftingRecipeProvider extends MyrrorRecipeSubProvider {
         this.provider.acceptRecipe(this.output, recipeId, builder.build());
     }
 
-    public static final class ShapedBuilder {
+    public interface CraftingBuilder {
+        CraftingBuilder category(CraftingBookCategory category);
+
+        CraftingBuilder group(String group);
+    }
+
+    public static final class ShapedBuilder implements CraftingBuilder {
         private final HashMap<Character, Ingredient> map = new HashMap<>(9);
         private final String[] pattern;
         private final ItemStack result;
@@ -116,7 +134,7 @@ public abstract class CraftingRecipeProvider extends MyrrorRecipeSubProvider {
         }
     }
 
-    public static final class ShapelessBuilder {
+    public static final class ShapelessBuilder implements CraftingBuilder {
         private final NonNullList<Ingredient> inputs = NonNullList.withSize(9, Ingredient.EMPTY);
         private final ItemStack result;
         private CraftingBookCategory category = CraftingBookCategory.MISC;
@@ -134,11 +152,13 @@ public abstract class CraftingRecipeProvider extends MyrrorRecipeSubProvider {
             return new ShapelessBuilder(stack);
         }
 
+        @Override
         public ShapelessBuilder category(@NotNull CraftingBookCategory category) {
             this.category = Objects.requireNonNull(category);
             return this;
         }
 
+        @Override
         public ShapelessBuilder group(String group) {
             this.group = group;
             return this;
