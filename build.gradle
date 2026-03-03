@@ -66,8 +66,8 @@ processResources {
 		expand (
 			"version": project.version,
 			"mod_id": mod_id,
-			"mod_name": mod_id,
-			"mod_description": mod_id,
+			"mod_name": mod_name,
+			"mod_description": mod_description,
 			"minecraft_version": minecraft_version,
 			"loader_version": loader_version,
 			"fabric_api_version": fabric_api_version

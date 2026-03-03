@@ -1,6 +1,6 @@
 {
 	"schemaVersion": 1,
-	"id": "template",
+	"id": "myrror",
 	"version": "${version}",
 	"name": "${mod_name}",
 	"description": "${mod_description}",
@@ -12,23 +12,23 @@
 		"sources": "https://github.com/FabricMC/fabric-example-mod"
 	},
 	"license": "MIT",
-	"icon": "assets/template/icon.png",
+	"icon": "assets/myrror/icon.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"net.myriantics.template.TemplateMod"
+			"net.myriantics.myrror.MyrrorCommon"
 		],
 		"client": [
-			"net.myriantics.template.TemplateModClient"
+			"net.myriantics.myrror.TemplateModClient"
 		],
 		"fabric-datagen": [
-			"net.myriantics.template.TemplateModDataGenerator"
+			"net.myriantics.myrror.MyrrorDataGenerator"
 		]
 	},
 	"mixins": [
 		"template.mixins.json",
 		{
-			"config": "template.client.mixins.json",
+			"config": "myrror.client.mixins.json",
 			"environment": "client"
 		}
 	],

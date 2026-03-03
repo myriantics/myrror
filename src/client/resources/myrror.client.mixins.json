@@ -1,6 +1,6 @@
 {
   "required": true,
-  "package": "net.myriantics.template.mixin",
+  "package": "net.myriantics.myrror.mixin",
   "compatibilityLevel": "JAVA_21",
   "client": [
   ],

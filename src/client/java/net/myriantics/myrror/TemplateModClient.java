@@ -1,4 +1,4 @@
-package net.myriantics.template;
+package net.myriantics.myrror;
 
 import net.fabricmc.api.ClientModInitializer;
 
