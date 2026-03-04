@@ -35,7 +35,6 @@ public abstract class DamageTypeProvider extends MyrrorDynamicRegistrySubProvide
     }
 
     public static final class Builder {
-        private final ResourceKey<DamageType> key;
         private final String msgId;
         private final DamageScaling scaling;
         private DamageEffects effects = DamageEffects.HURT;
@@ -43,7 +42,6 @@ public abstract class DamageTypeProvider extends MyrrorDynamicRegistrySubProvide
         private DeathMessageType deathMessageType = DeathMessageType.DEFAULT;
 
         private Builder(ResourceKey<DamageType> key, DamageScaling scaling) {
-            this.key = key;
             this.msgId = key.location().getNamespace() + "." + key.location().getPath();
             this.scaling = scaling;
         }
