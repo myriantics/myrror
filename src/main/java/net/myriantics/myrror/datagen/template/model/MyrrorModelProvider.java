@@ -51,7 +51,7 @@ public final class MyrrorModelProvider extends FabricModelProvider implements My
     }
 
     public interface ItemModelSubProviderFactory {
-        MyrrorBlockModelSubProvider create(MyrrorModelProvider provider, ItemModelGenerators generators);
+        MyrrorItemModelSubProvider create(MyrrorModelProvider provider, ItemModelGenerators generators);
     }
 
     public MyrrorModelProvider add(ItemModelSubProviderFactory factory) {
