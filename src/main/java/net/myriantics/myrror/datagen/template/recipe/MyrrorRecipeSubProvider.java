@@ -1,4 +1,4 @@
-package net.myriantics.myrror.datagen.template;
+package net.myriantics.myrror.datagen.template.recipe;
 
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceLocation;

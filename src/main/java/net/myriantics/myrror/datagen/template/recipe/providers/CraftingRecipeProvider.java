@@ -1,4 +1,4 @@
-package net.myriantics.myrror.datagen.template.providers;
+package net.myriantics.myrror.datagen.template.recipe.providers;
 
 import net.minecraft.core.NonNullList;
 import net.minecraft.data.recipes.RecipeOutput;
@@ -9,8 +9,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.ItemLike;
-import net.myriantics.myrror.datagen.template.MyrrorRecipeProvider;
-import net.myriantics.myrror.datagen.template.MyrrorRecipeSubProvider;
+import net.myriantics.myrror.datagen.template.recipe.MyrrorRecipeProvider;
+import net.myriantics.myrror.datagen.template.recipe.MyrrorRecipeSubProvider;
 import net.myriantics.myrror.util.MyrrorPatterns;
 import org.jetbrains.annotations.NotNull;
 
