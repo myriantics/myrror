@@ -95,7 +95,7 @@ public abstract class CraftingRecipeProvider extends MyrrorRecipeSubProvider {
         private final String[] pattern;
         private final ItemStack result;
         private CraftingBookCategory category = CraftingBookCategory.MISC;
-        private String group = null;
+        private String group = "";
 
         private ShapedBuilder(String[] pattern, ItemStack result) {
             this.pattern = pattern;
@@ -138,7 +138,7 @@ public abstract class CraftingRecipeProvider extends MyrrorRecipeSubProvider {
         private final NonNullList<Ingredient> inputs = NonNullList.withSize(9, Ingredient.EMPTY);
         private final ItemStack result;
         private CraftingBookCategory category = CraftingBookCategory.MISC;
-        private String group = null;
+        private String group = "";
 
         private ShapelessBuilder(ItemStack result) {
             this.result = result;

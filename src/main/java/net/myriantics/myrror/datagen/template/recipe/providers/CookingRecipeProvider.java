@@ -58,7 +58,7 @@ public abstract class CookingRecipeProvider extends MyrrorRecipeSubProvider {
         private final ItemStack result;
         private float experience = 0.1f;
         private int cookingTime = 200;
-        private String group = null;
+        private String group = "";
         private CookingBookCategory category = CookingBookCategory.MISC;
 
         private CookingBuilder(Ingredient ingredient, ItemStack result) {
