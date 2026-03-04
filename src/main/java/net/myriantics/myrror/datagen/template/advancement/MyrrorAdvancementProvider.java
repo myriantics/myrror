@@ -43,8 +43,9 @@ public final class MyrrorAdvancementProvider extends AdvancementProvider impleme
         T create(MyrrorAdvancementProvider provider, Consumer<AdvancementHolder> consumer);
     }
 
-    public void addProvider(AdvancementSubProviderFactory factory) {
+    public MyrrorAdvancementProvider addProvider(AdvancementSubProviderFactory<?> factory) {
         this.subProviders.add(factory);
+        return this;
     }
 
     @Override
