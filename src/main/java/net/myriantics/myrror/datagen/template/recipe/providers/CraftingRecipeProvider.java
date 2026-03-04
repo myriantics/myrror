@@ -46,7 +46,7 @@ public abstract class CraftingRecipeProvider extends MyrrorRecipeSubProvider {
     }
 
     public void add2x2PackingRecipe(Ingredient input, ItemStack output, UnaryOperator<ShapedBuilder> operator) {
-        addShapedCraftingRecipe(MyrrorPatterns.SQUARE_2, output, builder -> operator.apply(builder.associate('x', input)));
+        addShapedCraftingRecipe(MyrrorPatterns.SQUARE_2, output, builder -> operator.apply(builder.associate('X', input)));
     }
 
     public void add2x2UnpackingRecipe(Ingredient ingredient, ItemLike output, UnaryOperator<ShapelessBuilder> operator) {
@@ -54,7 +54,7 @@ public abstract class CraftingRecipeProvider extends MyrrorRecipeSubProvider {
     }
 
     public void add3x3PackingRecipe(Ingredient input, ItemStack output, UnaryOperator<ShapedBuilder> operator) {
-        addShapedCraftingRecipe(MyrrorPatterns.SQUARE_3, output, builder -> operator.apply(builder.associate('x', input)));
+        addShapedCraftingRecipe(MyrrorPatterns.SQUARE_3, output, builder -> operator.apply(builder.associate('X', input)));
     }
 
     public void add3x3UnpackingRecipe(Ingredient ingredient, ItemLike output, UnaryOperator<ShapelessBuilder> operator) {
