@@ -135,7 +135,7 @@ public abstract class CraftingRecipeProvider extends MyrrorRecipeSubProvider {
     }
 
     public static final class ShapelessBuilder implements CraftingBuilder {
-        private final NonNullList<Ingredient> inputs = NonNullList.withSize(9, Ingredient.EMPTY);
+        private final NonNullList<Ingredient> inputs = NonNullList.create();
         private final ItemStack result;
         private CraftingBookCategory category = CraftingBookCategory.MISC;
         private String group = "";
