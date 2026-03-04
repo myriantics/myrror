@@ -172,14 +172,14 @@ public final class FancierItemModelBuilder {
 
     public static class FancierTextureOverrideBuilder {
         private final FancierItemModelBuilder builder;
-        private final String TextureSlot;
+        private final String textureSlot;
         private final String predicateId;
         private final List<Number> values = new ArrayList<>();
         private final List<ResourceLocation> textures = new ArrayList<>();
 
         private FancierTextureOverrideBuilder(FancierItemModelBuilder builder, String predicateId, String TextureSlot) {
             this.builder = builder;
-            this.TextureSlot = TextureSlot;
+            this.textureSlot = TextureSlot;
             this.predicateId = predicateId;
         }
 
@@ -191,7 +191,7 @@ public final class FancierItemModelBuilder {
 
         public FancierItemModelBuilder endOverride() {
             builder.validateValues(predicateId, values);
-            builder.overrides.add(new FancyTextureOverride(predicateId, TextureSlot, textures));
+            builder.overrides.add(new FancyTextureOverride(predicateId, textureSlot, values, textures));
             return builder;
         }
     }
@@ -200,19 +200,22 @@ public final class FancierItemModelBuilder {
         private final FancierItemModelBuilder builder;
         private final String predicateId;
         private final ArrayList<ModelTemplate> models = new ArrayList<>();
+        private final ArrayList<Number> values = new ArrayList<>();
 
         private FancierModelOverrideBuilder(FancierItemModelBuilder builder, String predicateId) {
             this.builder = builder;
             this.predicateId = predicateId;
         }
 
-        public FancierModelOverrideBuilder add(ModelTemplate model) {
+        public FancierModelOverrideBuilder add(Number number, ModelTemplate model) {
             this.models.add(model);
+            this.values.add(number);
             return this;
         }
 
         public FancierItemModelBuilder endOverride() {
-            this.builder.overrides.add(new FancyModelOverride(this.predicateId, models));
+            builder.validateValues(predicateId, values);
+            this.builder.overrides.add(new FancyModelOverride(this.predicateId, values, models));
             return builder;
         }
     }
@@ -221,11 +224,8 @@ public final class FancierItemModelBuilder {
         protected final List<Number> values;
         protected final String predicateId;
 
-        protected FancyOverride(String predicateId, int permutations) {
-            this.values = new ArrayList<>(permutations);
-            for (int i = 0; i < permutations; i++) {
-                this.values.set(i, (float) i / permutations);
-            }
+        protected FancyOverride(String predicateId, List<Number> values) {
+            this.values = values;
             this.predicateId = predicateId;
         }
 
@@ -241,8 +241,8 @@ public final class FancierItemModelBuilder {
     private static final class FancyModelOverride extends FancyOverride {
         private final List<ModelTemplate> models;
 
-        FancyModelOverride(String predicateId, List<ModelTemplate> models) {
-            super(predicateId, models.size());
+        FancyModelOverride(String predicateId, List<Number> values, List<ModelTemplate> models) {
+            super(predicateId, values);
             this.models = models;
         }
 
@@ -255,8 +255,8 @@ public final class FancierItemModelBuilder {
         private final String textureSlot;
         private final List<ResourceLocation> textureIds;
 
-        FancyTextureOverride(String predicateId, String textureSlot, List<ResourceLocation> textureIds) {
-            super(predicateId, textureIds.size());
+        FancyTextureOverride(String predicateId, String textureSlot, List<Number> values, List<ResourceLocation> textureIds) {
+            super(predicateId, values);
             this.textureSlot = textureSlot;
             this.textureIds = textureIds;
         }
