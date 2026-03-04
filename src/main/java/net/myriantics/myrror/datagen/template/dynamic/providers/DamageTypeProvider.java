@@ -12,11 +12,13 @@ import net.minecraft.world.damagesource.DeathMessageType;
 import net.myriantics.myrror.datagen.template.dynamic.MyrrorDynamicRegistryProvider;
 import net.myriantics.myrror.datagen.template.dynamic.MyrrorDynamicRegistrySubProvider;
 
+import java.util.function.BiConsumer;
 import java.util.function.UnaryOperator;
 
 public abstract class DamageTypeProvider extends MyrrorDynamicRegistrySubProvider<DamageType> {
-    public DamageTypeProvider(MyrrorDynamicRegistryProvider provider, HolderLookup.Provider lookup, FabricDynamicRegistryProvider.Entries entries) {
-        super(provider, lookup, entries, Registries.DAMAGE_TYPE);
+
+    public DamageTypeProvider(MyrrorDynamicRegistryProvider provider, HolderLookup.Provider lookup, MyrrorDynamicRegistryProvider.ILoveGenericsConsumer consumer) {
+        super(provider, lookup, consumer, Registries.DAMAGE_TYPE);
     }
 
     protected DamageType addNeverScaling(ResourceKey<DamageType> key, UnaryOperator<Builder> operator) {

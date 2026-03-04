@@ -2,21 +2,15 @@ package net.myriantics.myrror.datagen.template.dynamic;
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricDynamicRegistryProvider;
-import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.data.CachedOutput;
-import net.minecraft.data.DataProvider;
 import net.minecraft.resources.ResourceKey;
+import net.myriantics.myrror.core.MyrrorProvider;
 import net.myriantics.myrror.core.RegistryDependentProvider;
-import net.myriantics.myrror.datagen.template.advancement.MyrrorAdvancementProvider;
-import net.myriantics.myrror.datagen.template.advancement.MyrrorAdvancementSubProvider;
 
 import java.util.ArrayList;
 import java.util.concurrent.CompletableFuture;
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 
-public final class MyrrorDynamicRegistryProvider extends FabricDynamicRegistryProvider {
+public final class MyrrorDynamicRegistryProvider extends FabricDynamicRegistryProvider implements MyrrorProvider {
     final String namespace;
     private final ArrayList<DynamicRegistrySubProviderFactory<?>> factories = new ArrayList<>();
 
@@ -29,12 +23,22 @@ public final class MyrrorDynamicRegistryProvider extends FabricDynamicRegistryPr
         return (output, registriesFuture) -> new MyrrorDynamicRegistryProvider(output, registriesFuture, namespace);
     }
 
-    public void register(DynamicRegistrySubProviderFactory<?> factory) {
+    public MyrrorDynamicRegistryProvider add(DynamicRegistrySubProviderFactory<?> factory) {
         this.factories.add(factory);
+        return this;
     }
 
-    public interface DynamicRegistrySubProviderFactory<T> {
-        MyrrorDynamicRegistrySubProvider<T> create(MyrrorDynamicRegistryProvider provider, HolderLookup.Provider lookup, BiConsumer<ResourceKey<T>, T> biConsumer);
+    @Override
+    public String getNamespace() {
+        return this.namespace;
+    }
+
+    public interface DynamicRegistrySubProviderFactory<T extends MyrrorDynamicRegistrySubProvider<?>> {
+        T create(MyrrorDynamicRegistryProvider provider, HolderLookup.Provider lookup, ILoveGenericsConsumer consumer);
+    }
+
+    public interface ILoveGenericsConsumer {
+        <T> void consume(ResourceKey<T> key, T value);
     }
 
     @Override

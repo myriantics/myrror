@@ -1,17 +1,21 @@
 package net.myriantics.myrror.core;
 
+import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
+import net.minecraft.data.DataGenerator;
+import net.minecraft.data.DataProvider;
+
 public final class MyrrorPack {
-    private final String[] namespaces;
+    private final DataGenerator.PackGenerator pack;
 
-    private MyrrorPack(String[] namespaces) {
-        this.namespaces = namespaces;
+    public MyrrorPack(DataGenerator.PackGenerator pack) {
+        this.pack = pack;
     }
 
-    public static MyrrorPack create(String... namespaces) {
-        return new MyrrorPack(namespaces);
+    public static MyrrorPack of(DataGenerator.PackGenerator pack) {
+        return new MyrrorPack(pack);
     }
 
-    public void addProvider() {
-
+    public <T extends MyrrorProvider & DataProvider> void add(DataProvider.Factory<T> provider) {
+        this.pack.addProvider(provider);
     }
 }

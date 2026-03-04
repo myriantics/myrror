@@ -16,6 +16,7 @@ import net.minecraft.data.advancements.AdvancementProvider;
 import net.minecraft.data.advancements.AdvancementSubProvider;
 import net.minecraft.resources.RegistryOps;
 import net.minecraft.resources.ResourceLocation;
+import net.myriantics.myrror.core.MyrrorProvider;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-public final class MyrrorAdvancementProvider extends AdvancementProvider {
+public final class MyrrorAdvancementProvider extends AdvancementProvider implements MyrrorProvider {
     private final ArrayList<AdvancementSubProviderFactory> subProviders = new ArrayList<>();
     private final CompletableFuture<HolderLookup.Provider> registryLookup;
     private final PackOutput.PathProvider pathResolver;

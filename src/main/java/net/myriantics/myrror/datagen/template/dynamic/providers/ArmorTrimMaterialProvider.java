@@ -4,6 +4,7 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricDynamicRegistryProvider
 import net.minecraft.Util;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -20,8 +21,8 @@ import java.util.HashMap;
 import java.util.function.UnaryOperator;
 
 public abstract class ArmorTrimMaterialProvider extends MyrrorDynamicRegistrySubProvider<TrimMaterial> {
-    public ArmorTrimMaterialProvider(MyrrorDynamicRegistryProvider provider, HolderLookup.Provider lookup, FabricDynamicRegistryProvider.Entries entries) {
-        super(provider, lookup, entries, Registries.TRIM_MATERIAL);
+    public ArmorTrimMaterialProvider(MyrrorDynamicRegistryProvider provider, HolderLookup.Provider lookup, MyrrorDynamicRegistryProvider.ILoveGenericsConsumer consumer) {
+        super(provider, lookup, consumer, Registries.TRIM_MATERIAL);
     }
 
     protected TrimMaterial addTrimMaterial(ResourceKey<TrimMaterial> key, Item ingredient, float modelIndex, UnaryOperator<Builder> operator) {
