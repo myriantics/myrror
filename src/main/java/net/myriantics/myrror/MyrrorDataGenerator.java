@@ -7,7 +7,7 @@ import net.myriantics.myrror.datagen.template.dynamic.MyrrorDynamicRegistryProvi
 public class MyrrorDataGenerator implements DataGeneratorEntrypoint {
 	@Override
 	public void onInitializeDataGenerator(FabricDataGenerator fabricDataGenerator) {
-		FabricDataGenerator.Pack pack = fabricDataGenerator.createPack();
+		// FabricDataGenerator.Pack pack = fabricDataGenerator.createPack();
 		// example
 		// yeah i did name my test class that
 		// so what

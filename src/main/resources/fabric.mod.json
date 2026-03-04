@@ -20,9 +20,6 @@
 		],
 		"client": [
 			"net.myriantics.myrror.TemplateModClient"
-		],
-		"fabric-datagen": [
-			"net.myriantics.myrror.MyrrorDataGenerator"
 		]
 	},
 	"mixins": [
