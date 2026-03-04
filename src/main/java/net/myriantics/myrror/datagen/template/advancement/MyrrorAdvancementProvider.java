@@ -39,8 +39,8 @@ public final class MyrrorAdvancementProvider extends AdvancementProvider impleme
         this.namespace = namespace;
     }
 
-    public interface AdvancementSubProviderFactory {
-        MyrrorAdvancementSubProvider create(MyrrorAdvancementProvider provider, Consumer<AdvancementHolder> consumer);
+    public interface AdvancementSubProviderFactory<T extends MyrrorAdvancementSubProvider> {
+        T create(MyrrorAdvancementProvider provider, Consumer<AdvancementHolder> consumer);
     }
 
     public void addProvider(AdvancementSubProviderFactory factory) {
